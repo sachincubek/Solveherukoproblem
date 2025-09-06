@@ -67,7 +67,7 @@ services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 // Register OTP Service for DI
 builder.Services.AddScoped<IOTPService, OTPService>();
 
-// AutoMapper — register profiles from this assembly
+// AutoMapper ï¿½ register profiles from this assembly
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Cloudinary config wrapper
@@ -87,6 +87,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+ app.UseSwagger();
+ app.UseSwaggerUI();
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
@@ -100,5 +103,8 @@ app.MapControllers();
 //    var services = scope.ServiceProvider;
 //    await DbInitializer.SeedAsync(services);
 //}
+
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+app.Urls.Add($"http://*:{port}");
 
 app.Run();
